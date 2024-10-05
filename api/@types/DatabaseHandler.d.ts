@@ -1,5 +1,11 @@
-import { Author } from '../model/author';
+import { Author, DbCreateAuthor, DbPatchAuthor } from '../model/author';
+
+type DbResponse<T> = Promise<{ data: T; error: string }>;
 
 interface DatabaseHandler {
-  getAllAuthors(): Author[];
+  getAllAuthors(): DbResponse<Author[]>;
+  getAuthorById(): DbResponse<Author>;
+  createAuthor(author: DbCreateAuthor): DbResponse<string>;
+  patchAuthorById(id: string, authorPatch: DbPatchAuthor): DbResponse<string>;
+  deleteAuthorById(id: string): DbResponse<string>;
 }

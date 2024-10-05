@@ -46,7 +46,7 @@ export const dbCreateAuthorSchema = z.object({
   youTubeUrl: youTubeUrlSchema.optional(),
   userId: userIdSchema,
   createdAt: createdAtSchema,
-  udpatedAt: updatedAtSchema,
+  updatedAt: updatedAtSchema,
 });
 
 export const patchAuthorSchema = z.object({
@@ -79,3 +79,5 @@ export const dbPatchAuthorSchema = z.object({
 export interface Author extends z.infer<typeof createAuthorSchema> {
   _id: string;
 }
+export type DbCreateAuthor = z.infer<typeof dbCreateAuthorSchema>;
+export type DbPatchAuthor = z.infer<typeof dbPatchAuthorSchema>;
