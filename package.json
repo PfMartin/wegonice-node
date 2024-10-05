@@ -1,0 +1,26 @@
+{
+  "name": "wegonice-node",
+  "version": "1.0.0",
+  "description": "REST API for the wegonice application",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "build:watch": "npx tsc -w",
+    "prettier:check": "npx prettier --check api",
+    "prettier:write": "npx prettier --write api"
+  },
+  "author": "PfMartin",
+  "license": "ISC",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.13",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}
