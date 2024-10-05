@@ -21,6 +21,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "mongodb": "^6.9.0"
+    "mongodb": "^6.9.0",
+    "zod": "^3.23.8"
   }
 }
