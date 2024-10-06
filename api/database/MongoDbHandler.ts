@@ -1,7 +1,7 @@
 import { Db, MongoClient, ObjectId } from 'mongodb';
+import { DbAuthor, DbCreateAuthor, DbPatchAuthor } from '../model/author';
 
 import { DatabaseHandler } from '../@types/DatabaseHandler';
-import { DbAuthor } from '../model/author';
 
 export interface MongodbConfig {
   dbName: string;
@@ -52,9 +52,18 @@ export default class MongoDbHandler implements DatabaseHandler {
     try {
       const objectId = ObjectId.createFromHexString(id);
 
-      const data: DbAuthor = await this.db
+      const res: DbAuthor | null = await this.db
         .collection<DbAuthor>(Collection.Authors)
-        .find({ _id: objectId });
+        .findOne({ _id: objectId });
+
+      if (!res) {
+        return { data: null, error: `Failed to find author with id = ${id}` };
+      }
+
+      const data = {
+        ...res,
+        _id: res._id.toHexString(),
+      };
 
       return { data, error: '' };
     } catch (err: unknown) {
@@ -62,11 +71,26 @@ export default class MongoDbHandler implements DatabaseHandler {
     }
   };
 
-  createAuthor = async () => {
-    return { data: 'hello', error: '' };
+  createAuthor = async (author: DbCreateAuthor) => {
+    try {
+      const id = new ObjectId();
+
+      const dbAuthor = {
+        ...author,
+        _id: id,
+      };
+
+      const res = await this.db
+        .collection<DbAuthor>(Collection.Authors)
+        .insertOne(dbAuthor);
+
+      return { data: res.insertedId.toHexString(), error: '' };
+    } catch (err: unknown) {
+      return { data: null, error: err as string };
+    }
   };
 
-  patchAuthorById = async () => {
+  patchAuthorById = async (id: string, author: DbPatchAuthor) => {
     return { data: 'hello', error: '' };
   };
 
