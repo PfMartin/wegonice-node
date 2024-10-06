@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
 const firstNameSchema = z.string().describe('First name of the author');
@@ -79,5 +80,9 @@ export const dbPatchAuthorSchema = z.object({
 export interface Author extends z.infer<typeof createAuthorSchema> {
   _id: string;
 }
+export interface DbAuthor extends Omit<Author, '_id'> {
+  _id: ObjectId;
+}
+
 export type DbCreateAuthor = z.infer<typeof dbCreateAuthorSchema>;
 export type DbPatchAuthor = z.infer<typeof dbPatchAuthorSchema>;

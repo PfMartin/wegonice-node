@@ -1,6 +1,6 @@
 import { Author, DbCreateAuthor, DbPatchAuthor } from '../model/author';
 
-type DbResponse<T> = Promise<{ data: T; error: string }>;
+type DbResponse<T> = Promise<{ data: T | null; error: string }>;
 
 interface DatabaseHandler {
   getAllAuthors(): DbResponse<Author[]>;

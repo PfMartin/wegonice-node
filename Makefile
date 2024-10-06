@@ -1,7 +1,7 @@
 include .env
 
-connect_admin_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@0.0.0.0:27017
-connect_user_URL=mongodb://${WEGONICE_USER}:${WEGONICE_PWD}@0.0.0.0:27017
+connect_admin_URL=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@${WEGONICE_HOST}:${WEGONICE_PORT}
+connect_user_URL=mongodb://${WEGONICE_USER}:${WEGONICE_PWD}@${WEGONICE_HOST}:${WEGONICE_PORT}
 
 db-connect-admin:
 	docker exec -it wegonice-db mongosh "${connect_admin_URL}/admin?authSource=admin"
