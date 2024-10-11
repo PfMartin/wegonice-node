@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
+    "test": "jest",
     "prettier:check": "npx prettier --check api",
     "prettier:write": "npx prettier --write api"
   },
@@ -13,14 +14,17 @@
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
+    "@types/dotenv": "^8.2.0",
     "@types/jest": "^29.5.13",
     "jest": "^29.7.0",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "5.6.3"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "mongodb": "^6.9.0",
     "zod": "^3.23.8"
   }
