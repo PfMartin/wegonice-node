@@ -30,8 +30,6 @@ const nameUnionSchema = z.union([
     alias: nameAliasSchema,
   }),
 ]);
-const createdAtSchema = z.date().describe('Date when the author was created');
-const updatedAtSchema = z.date().describe('Date when the author was updated');
 
 export const createAuthorSchema = z.object({
   name: nameUnionSchema,
@@ -46,8 +44,6 @@ export const dbCreateAuthorSchema = z.object({
   instagramUrl: instagramUrlSchema.optional(),
   youTubeUrl: youTubeUrlSchema.optional(),
   userId: userIdSchema,
-  createdAt: createdAtSchema,
-  updatedAt: updatedAtSchema,
 });
 
 export const patchAuthorSchema = z.object({
@@ -74,11 +70,12 @@ export const dbPatchAuthorSchema = z.object({
   websiteUrl: websiteUrlSchema.optional(),
   instagramUrl: instagramUrlSchema.optional(),
   youTubeUrl: youTubeUrlSchema.optional(),
-  updatedAt: updatedAtSchema,
 });
 
 export interface Author extends z.infer<typeof createAuthorSchema> {
   _id: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface DbAuthor extends Omit<Author, '_id'> {
   _id: ObjectId;

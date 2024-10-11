@@ -78,6 +78,8 @@ export default class MongoDbHandler implements DatabaseHandler {
       const dbAuthor = {
         ...author,
         _id: id,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
 
       const res = await this.db
@@ -91,10 +93,44 @@ export default class MongoDbHandler implements DatabaseHandler {
   };
 
   patchAuthorById = async (id: string, author: DbPatchAuthor) => {
-    return { data: 'hello', error: '' };
+    const { name, websiteUrl, youTubeUrl, instagramUrl } = author;
+
+    const updateObject: Record<string, any> = {
+      ...(name?.alias && { 'name.alias': name.alias }),
+      ...(name?.firstName && { 'name.firstName': name.firstName }),
+      ...(name?.lastName && { 'name.lastName': name.lastName }),
+      ...(websiteUrl && { websiteUrl: websiteUrl }),
+      ...(youTubeUrl && { youTubeUrl: youTubeUrl }),
+      ...(instagramUrl && { instagramUrl: instagramUrl }),
+    };
+
+    try {
+      const updateId = ObjectId.createFromHexString(id);
+
+      const res = await this.db
+        .collection<DbAuthor>(Collection.Authors)
+        .updateOne(
+          { _id: updateId },
+          { $set: updateObject, $currentDate: { updatedAt: true } }
+        );
+
+      return { data: res.upsertedCount, error: '' };
+    } catch (err: unknown) {
+      return { data: null, error: err as string };
+    }
   };
 
-  deleteAuthorById = async () => {
-    return { data: 'hello', error: '' };
+  deleteAuthorById = async (id: string) => {
+    try {
+      const deleteId = ObjectId.createFromHexString(id);
+
+      const res = await this.db
+        .collection<DbAuthor>(Collection.Authors)
+        .deleteOne({ _id: deleteId });
+
+      return { data: res.deletedCount, error: '' };
+    } catch (err: unknown) {
+      return { data: null, error: err as string };
+    }
   };
 }
