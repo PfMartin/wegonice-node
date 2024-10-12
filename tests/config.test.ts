@@ -18,8 +18,7 @@ describe('config', () => {
     expect(data?.dbName).toBe('wegonice');
     expect(data?.dbUser).toBe('niceUser');
     expect(data?.dbUserPwd).toBe('nicePassword');
-    expect(data?.dbHost).toBe('0.0.0.0');
-    expect(data?.dbPort).toBe('27017');
+    expect(data?.dbHost).toBe('0.0.0.0:27017');
   });
 
   it('fails to get the config due to missing port variable', () => {

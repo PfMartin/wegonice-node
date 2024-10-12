@@ -25,11 +25,6 @@ export const getConfig = (path: string) => {
         (() => {
           throw new Error('WEGONICE_HOST variable is not set');
         })(),
-      dbPort:
-        process.env.WEGONICE_PORT ||
-        (() => {
-          throw new Error('WEGONICE_PORT variable is not set');
-        })(),
     };
     return { data, error: '' };
   } catch (err: unknown) {

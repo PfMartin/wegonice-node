@@ -6,8 +6,7 @@ import { DatabaseHandler } from '../@types/DatabaseHandler';
 export interface MongodbConfig {
   dbName: string;
   host: string;
-  port: number;
-  username: string;
+  userName: string;
   userPassword: string;
 }
 
@@ -18,16 +17,22 @@ enum Collection {
 
 export default class MongoDbHandler implements DatabaseHandler {
   private db: Db;
+  private client: MongoClient;
 
   constructor(config: MongodbConfig) {
-    const client = new MongoClient(this.getConnectionUri(config));
-    this.db = client.db(config.dbName);
+    this.client = new MongoClient(this.getConnectionUri(config));
+    this.db = this.client.db(config.dbName);
   }
 
   private getConnectionUri = (config: MongodbConfig) => {
-    const { dbName, host, port, username, userPassword } = config;
+    const { dbName, host, userName, userPassword } = config;
 
-    return `mongodb://${username}:${userPassword}@${host}:${port}/${dbName}?authSource=${dbName}`;
+    return `mongodb://${userName}:${userPassword}@${host}/${dbName}?authSource=${dbName}`;
+  };
+
+  public disconnect = async () => {
+    this.db
+    await this.client.close();
   };
 
   getAllAuthors = async () => {
